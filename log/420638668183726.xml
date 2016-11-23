@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<consultas><consulta0><dirIpServer>undefined</dirIpServer><grafo>undefined</grafo><endpoint>http://data.utpl.edu.ec/ambar/sparql</endpoint><query>select  *  where { ?s rdf:type rdf:Class }  LIMIT 10 OFFSET 0</query></consulta0></consultas>

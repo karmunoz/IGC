@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<consultas><consulta0><dirIpServer>http://data.utpl.edu.ec/ambar</dirIpServer><grafo>default</grafo><endpoint>http://data.utpl.edu.ec/ambar/sparql</endpoint><query>select distinct ?g where{ GRAPH ?g {?s ?p ?o }}</query></consulta0><consulta1><dirIpServer>http://data.utpl.edu.ec/ambar</dirIpServer><grafo>http://data.utpl.edu.ec/dbpedia</grafo><endpoint>http://data.utpl.edu.ec/ambar/sparql</endpoint><query>select distinct ?c where{?x rdf:type ?c }</query></consulta1></consultas>

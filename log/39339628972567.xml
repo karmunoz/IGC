@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<consultas><consulta1><dirIpServer>http://data.utpl.edu.ec/ambar</dirIpServer><grafo>http://data.utpl.edu.ec/dbpedia</grafo><endpoint>http://data.utpl.edu.ec/ambar/sparql</endpoint><query>select  DISTINCT COUNT ( ?s ) AS ?res  where { ?s geo:lat ?p }  LIMIT 10 OFFSET 0</query></consulta1></consultas>
