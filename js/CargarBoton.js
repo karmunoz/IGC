@@ -436,7 +436,7 @@ function busquedaProperty2(textoclass)
 function cargarphp()
 {
     $('#selectbody').load('./select/body.php');
-    //$('#modal1').load('./modal/modalx.php');    
+    $('#modal1').load('./modal/modalx.php');    
 }
 //funcion para cargar las clases
 function clases()
@@ -1753,6 +1753,7 @@ function Eliminarcampox()
 }
 function valordex(idx, tipot)
 {
+    //console.log(idx+"-"+tipot);
     $("#tablabusqueda tr").remove();//tabla
     $( "#infomodal" ).html('');//mensaje informacion
     document.getElementById("busqueda1").value ="";//vaciar cuabro
