@@ -68,6 +68,154 @@ window.onload = function()
     // clases();//carga las clases
     // property();//cargar la lista del ?y  
 }
+
+function Descargar()
+
+{
+    var boffset = document.getElementById("boffset").value;
+    var blimit = document.getElementById("blimit").value;
+    console.log(boffset+" - "+blimit);
+    var consulta;
+    for(var i=0; i< CamposImput.length; i++) 
+    {   
+        // Si el tipo de campo es una caja de texto
+        if(CamposImput[i].type == "text")
+        {            
+            if(ValidarCampo(CamposImput[i]) == false)
+            {
+                bootbox.alert("Debe completar todos los campos", function() {});
+                return;
+            }         
+        }
+    }
+    
+    // console.log("largo campo "+ CamposImput.length);
+    // if(CamposImput.length == 0)
+    // {
+    //     return;
+    // }
+    // debo limpiar el div 
+    document.getElementById("principal").innerHTML="";
+    document.getElementById("principal1").innerHTML="";
+    document.getElementById("Consulta").innerHTML="";
+    document.getElementById("Error").innerHTML="";
+    //    Debo ver que el formulario este corecto para hacer un string para la consulta
+    var lista =new Array();
+    for(var i=0; i< Campos.length; i++) {
+        var cadena = Campos[i].id;
+        var palabrasSeparadas = cadena.split("_");
+        var numero= palabrasSeparadas[0];
+        var palabra= palabrasSeparadas[1];
+        //verificar que sea un div correcto
+        if((numero!="") &&( palabra!="" || palabra!="undefined"))
+        {
+            //verificar que este completo el formulario
+            //es decir que no esten las Opciones
+            if(palabra=="OPCIONES")
+            {
+                bootbox.alert("Debe completar todos los campos", function() {});
+                return;
+            }
+            //en caso contrario creo la lista para hacer la consulta
+            lista[numero]=palabra;
+        }        
+    }
+    //todo esta completado ahora hacer el string para la consulta
+    //alert("Lista:"+lista);
+    //para el primer caso la lista esta vacia
+    if(lista.length==0)
+    {
+        //alert("Lista vacia");
+        bootbox.alert("Debe completar todos los campos", function() {});
+        return;
+    }
+    //confecionar la lista
+    var select = stringSelect();
+    consulta = select +" where { "+Funcion(lista,1)+" }";
+    var Consulta = select+ "<br> where { <br><p>"+Funcion2(lista,1)+"</p>}";
+    //consulta solo el cuerpo
+    //alert("Consulta "+consulta);
+    //$("#Consulta").append('<h4 class="bg-primary"> Consulta </h4> ');
+    $("#Consulta").append('<font size="3">'+Consulta +'</font>');
+    //verificar que no este la palabra variable en la consulta
+    //Variable
+    var bbb = consulta.indexOf(" Variable ");
+    console.log(bbb);
+    if( bbb == -1 )
+    {
+        console.log("no esta Variable");
+    }
+    else
+    {
+        console.log("esta la palabra Variable en la consulta" );
+        bootbox.alert("Debe seleccionar una variable en  todos los campos", function() {});
+        return;
+    }
+    var bba = consulta.indexOf(" undefined ");
+    console.log(bba);
+    if( bba == -1 )
+    {
+        console.log("no esta  undefined");
+    }
+    else
+    {
+        console.log("esta la palabra  undefined en la consulta" );
+        bootbox.alert("Debe completar todos los campos", function() {});
+        return;
+    }
+    if(booleanNext==true)
+   {
+    console.log("----- iniciando consulta");
+        valorConsulta = consulta;
+        valorNext = 0;
+   }
+    
+    // debo limpiar el div 
+    document.getElementById("principal").innerHTML="";
+    document.getElementById("principal1").innerHTML="";
+    console.log("consulta sin tranformar "+consulta);
+    //console.log(prefixArray);
+    consulta =prefixuri(consulta);    
+    console.log("consulta tranformada  "+consulta);
+    consulta = consulta.replace(/%/g, "#####");
+    consulta = consulta.replace(/\+/g, "####");
+    consulta = consulta.replace(/&/g, "*****");
+    var querySparql = consulta +" LIMIT "+blimit+" OFFSET "+boffset+"";
+    var datos = "q=" + querySparql +"###"+ipServer+"###"+grafo+"###"+endPoint+"###"+identi;
+    document.getElementById("Error").innerHTML="";
+    $( "#Error" ).append('<label class="control-label" for="inputError">Realizando consulta...</label> ');
+    console.log("´´´´´´´´´´´´´´´´´´´´´"+datos);
+    $.ajax({
+        type: "POST",
+        url:"peticionHTTP.php",
+        async: true,
+        data:datos ,
+        success:
+        function(datos)
+        {
+
+            var rtArray = datos.results.bindings;
+            console.log(rtArray);
+            var person = any2url('varA', rtArray)
+            console.log("Debo descargar el archivo");
+            console.log(person);
+            window.open ('archivoExcel.php?varA='+person);
+                 }
+            });
+    //Descargar(rtArray);
+    
+    
+}
+function any2url(prefix, obj) {
+        var args=new Array();
+        if(typeof(obj) == 'object'){
+            for(var i in obj)
+                args[args.length]=any2url(prefix+'['+encodeURIComponent(i)+']', obj[i]);
+        }
+        else
+            args[args.length]=prefix+'='+encodeURIComponent(obj);
+        return args.join('&');
+    }
 function cargarConex()
 {   
     $("#myModal").modal('hide');
@@ -431,7 +579,7 @@ function busquedaProperty2(textoclass)
 }
 
 /**
-*   Caragar el panel de select y modal
+*   Caragar el panel de select y modal de busqueda
 */
 function cargarphp()
 {

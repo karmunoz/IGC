@@ -226,10 +226,14 @@
                         <div class="from-group">
                             <button type="button" class="btn btn-primary" id="boton" onclick="GetCampos()" data-toggle="tooltip" data-placement="bottom" title="Ejecuta la consulta creada."><b>Ejecutar consulta <img src="icon/4.png" width="30" height="30" /></b></button>
                             <button type="button" class="btn btn-primary" id="boton" onclick="Limpiar()" data-toggle="tooltip" data-placement="bottom" title="Limpiar todo."><b>Limpiar <img src="icon/5.png" width="30" height="30" /></b></button>
+                            <!-- onclick="Descargar()"-->
+                            <button type="button" class="btn btn-primary" id="boton" data-toggle="modal" data-target="#Modaldescarga" data-toggle="tooltip" data-placement="bottom" title="Descargar respuesta." ><b>Descargar <img src="icon/excel.png" width="30" height="30" /></b></button>
                         </div>
                     </div>
                 </div>
-                <!-- Fin Boton -->   
+                <!-- Fin Boton --> 
+                <!--descargar-->  
+                <div id ="descargar"></div>
             </div>
         </div>
             <div  class="col-xs-12" >            
@@ -365,7 +369,36 @@ IGC se divide en 8 bloques y su uso se resume en 7 simples paso:</b><br><br>
                     </div>
                 </div>
                 <!-- Fin Modal -->
-
+                <!-- Modal de descarga -->
+                <div class="modal fade bs-example-modal-sm" id="Modaldescarga" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"  aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i class="fa fa-gear"></i>
+                                    Buscar Modal
+                                <button type="button" class="close" onclick="cancelardatos()" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label >Limit</label>
+                                        <input type="number" class="form-control" id="blimit" name="blimit" min="1" step="1" value="10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Offset</label>
+                                        <input type="number" class="form-control" id="boffset" name="boffset" min="1" step="1" value= "1">
+                                    </div>
+                                    
+                            </div> <!-- Fin cuerpo modal -->
+                                <p ALIGN=center>.</p>
+                            
+                            <div class="modal-footer">
+                                <button data-toggle="tooltip" data-placement="top" title="Al guardar los datos, se actualizara la información de las Class, Property y Prefijos." type="button" class="btn btn-primary" onclick="Descargar()" data-dismiss="modal">Descargar</button>
+                                <button type="button" class="btn btn-primary"  data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         
 
 
